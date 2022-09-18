@@ -35,16 +35,31 @@ class Flow:
 
     @classmethod
     def _execute_flow_up(cls, args):
-        print('flow up ...')
+        import asyncio
+        flow_executor = cls._get_flow_executor(args)
+        asyncio.run(flow_executor.execute_up())
 
     @classmethod
     def _execute_flow_down(cls, args):
-        print('flow down ...')
+        import asyncio
+        flow_executor = cls._get_flow_executor(args)
+        asyncio.run(flow_executor.execute_down())
 
     @classmethod
     def _execute_flow_update(cls, args):
-        print('flow update ...')
+        import asyncio
+        flow_executor = cls._get_flow_executor(args)
+        asyncio.run(flow_executor.execute_update())
 
     @classmethod
     def _execute_flow_status(cls, args):
-        print('flow status ...')
+        import asyncio
+        flow_executor = cls._get_flow_executor(args)
+        asyncio.run(flow_executor.execute_status())
+
+    @classmethod
+    def _get_flow_executor(cls, args):
+        from metasporeflow.local_flow_executor import LocalFlowExecutor
+        # TODO: parse metaspore-flow.yml into resources
+        flow_executor = LocalFlowExecutor(None)
+        return flow_executor
