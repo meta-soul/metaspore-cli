@@ -25,7 +25,7 @@ class Main:
             command_executor = args.command_executor
             command_executor(args)
         else:
-            print('no metaspore command specified')
+            print('no command specified')
 
     @classmethod
     def _parse_args(cls):

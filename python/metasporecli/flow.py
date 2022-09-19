@@ -59,7 +59,9 @@ class Flow:
 
     @classmethod
     def _get_flow_executor(cls, args):
+        from metasporeflow.flows.flow_loader import FlowLoader
         from metasporeflow.executors.local_flow_executor import LocalFlowExecutor
-        # TODO: parse metaspore-flow.yml into resources
-        flow_executor = LocalFlowExecutor(None)
+        flow_loader = FlowLoader()
+        resources = flow_loader.load()
+        flow_executor = LocalFlowExecutor(resources)
         return flow_executor
