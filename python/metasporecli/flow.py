@@ -24,10 +24,10 @@ class Flow:
         up_parser.set_defaults(subcommand_executor=cls._execute_flow_up)
         down_parser = subcommand_parsers.add_parser('down', help='stop metaspore flow')
         down_parser.set_defaults(subcommand_executor=cls._execute_flow_down)
-        update_parser = subcommand_parsers.add_parser('update', help='update metaspore flow')
-        update_parser.set_defaults(subcommand_executor=cls._execute_flow_update)
         status_parser = subcommand_parsers.add_parser('status', help='show metaspore flow status')
         status_parser.set_defaults(subcommand_executor=cls._execute_flow_status)
+        reload_parser = subcommand_parsers.add_parser('reload', help='reload metaspore flow')
+        reload_parser.set_defaults(subcommand_executor=cls._execute_flow_reload)
 
     @classmethod
     def _execute_flow(cls, args):
@@ -46,20 +46,20 @@ class Flow:
         asyncio.run(flow_executor.execute_down())
 
     @classmethod
-    def _execute_flow_update(cls, args):
-        import asyncio
-        flow_executor = cls._get_flow_executor(args)
-        asyncio.run(flow_executor.execute_update())
-
-    @classmethod
     def _execute_flow_status(cls, args):
         import asyncio
         flow_executor = cls._get_flow_executor(args)
         asyncio.run(flow_executor.execute_status())
 
     @classmethod
+    def _execute_flow_reload(cls, args):
+        import asyncio
+        flow_executor = cls._get_flow_executor(args)
+        asyncio.run(flow_executor.execute_reload())
+
+    @classmethod
     def _get_flow_executor(cls, args):
-        from metasporeflow.local_flow_executor import LocalFlowExecutor
+        from metasporeflow.executors.local_flow_executor import LocalFlowExecutor
         # TODO: parse metaspore-flow.yml into resources
         flow_executor = LocalFlowExecutor(None)
         return flow_executor
